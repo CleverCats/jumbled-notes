@@ -3,5 +3,5 @@
    删除文件：find -inum 节点号 -delete
 2. 查看公网ip: curl ifconfig.me
 3.查看网站ip: nslookup www.baidu.com
-mysql -uroot -p123456 -hlocalhost -P3306
-4.连接mysql: mysql -h60.204.204.220 -p3306 -uroot -p123456
+4.连接mysql: mysql -h[IP] -p[PORT] -u[USERNAME] -p[PWD]
+5.查看依赖(通过exemple快速查找三方库需要的依赖): ldd 可执行文件

@@ -1,0 +1,21 @@
+#include<iostream>
+using namespace std;
+class person
+{
+public:
+	person(int a, int b) :age(a), number(b)     //第一种
+	//person(int a, int b){ age = a, number = b }  //第二种
+		//person():age(5),number(10)          //第三种
+	{
+		
+	}
+	int age, number;
+};
+int main()
+{
+	person stu1(2,3);
+	//person stu1;
+	cout << "Age=" << stu1.age << endl << "Number=" << stu1.number << endl;
+	system("pause");
+	return 0;
+}

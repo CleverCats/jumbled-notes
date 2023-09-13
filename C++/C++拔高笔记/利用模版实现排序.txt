@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+template<class S>
+void Swap(S &arr1, S &arr2)
+{
+	S temp = arr1;
+	arr1 = arr2;
+	arr2 = temp;
+}
+template<typename P>
+void Print(P arr[],int len) 
+{
+	for (int i = 0; i < len; i++)
+	{
+		cout << arr[i] << " ";
+		if ((i+1) % 6 == 0)cout << endl;
+	}
+}
+template<typename T>
+void Rank(T arr[],int len)
+{
+	for (int i = 0; i < len; i++)
+	{
+		int Max = i;
+		for (int j = i+1; j < len; j++)
+		{
+			if (arr[Max] < arr[j])
+			{
+				Max=j;
+			}
+		}
+		if (Max != i)
+		{
+			Swap(arr[Max], arr[i]); //每次把最大的找出来与 i 的位置交换
+		}
+	}
+}
+int main()
+{
+	int len;
+	char chr[] = "qazwsxedcrfvtgbyhnujmikolp";
+	int Arr[] = { 1, 2, 12, 12, 31, 231, 321, 51, 2, 121, 21, 2, 12, 12, 21, 2 };
+	len = sizeof(chr) / sizeof(char);
+	Rank(chr, len);
+	Print(chr, len);  //自动类型推导
+	cout << endl;
+	len = sizeof(Arr) / sizeof(int);
+	Rank(Arr, len);
+	Print(Arr, len);
+	cout << endl;
+	system("pause");
+	return 0;
+}

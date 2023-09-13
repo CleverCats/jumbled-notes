@@ -1,0 +1,30 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Functor  //函数对象
+{
+public:
+	string operator()(string v1)  //仿函数
+	{
+		return v1; 
+		//cout << "伪函数被调用" << endl;  //2 . 这是函数对象自己内部的状态,由程序员自定义
+	}
+};
+void Print(Functor&m,string str)
+{
+	cout<< m(str)<<endl;   //3.通过引用传递函数和重载()的仿函数,使函数对象可以作为参数
+}
+void test()
+{
+	//1.函数对象在调用时。可以像普通函数那样调用，可以一样有参数,有返回值
+	//2.函数对象超出普通函数的概念，可以有自己的状态
+	Functor Myprint;
+	cout << Myprint("hellow world") << endl;
+	Print(Myprint, "hi World");   //3.通过引用传递函数和重载()的仿函数,使函数对象可以作为参数
+}
+int main()
+{
+	test(); 
+	system("PAUSE");
+	return 0;
+}

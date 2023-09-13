@@ -1,0 +1,29 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Home
+{
+friend void Gay(Home &p); //告诉编译器全局函数Gay是Home的盆友,允许访问私有内容
+public:
+	Home()
+	{
+		this->drawingroom = "客厅";
+		bedroom = "卧室";
+	}
+public:
+	string drawingroom ;
+private:
+	string bedroom ;
+};
+void Gay(Home &p)
+{
+	cout << "好朋友正在访问 " << p.bedroom << endl;//访问公共
+	cout << "好朋友正在访问 " << p.drawingroom << endl; //访问私有
+}
+int main()
+{
+	Home myhome;
+	Gay(myhome);
+	system("pause");
+	return 0;
+}

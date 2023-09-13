@@ -1,0 +1,48 @@
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+class Person
+{
+public:
+	char m_Name[8];
+	int m_Age;
+};
+void Write()
+{
+	Person Per = { "王二狗", 23 };
+	ofstream ofs;
+	ofs.open("Person.txt", ios::out | ios::binary);
+	if (!ofs.is_open())
+	{
+		cout << "文件打开失败" << endl;
+		return;
+	}
+	//函数原型:ostream& write(const char* buffer,int len);
+	ofs.write((const char*)&Per, sizeof(Per));
+	ofs.close();
+	cout << "写入成功" << endl << "-----------------------------" << endl;
+}
+void Input()
+{
+	ifstream ifs;
+	ifs.open("Person.txt", ios::in | ios::binary);
+	if (!ifs.is_open())
+	{
+		cout << "文件打开失败" << endl;
+		return;
+	}
+	Person Per;
+	ifs.read((char*)&Per, sizeof(Per));
+	cout << "姓名:" << Per.m_Name << endl   
+	     << "年龄:" <<Per.m_Age << endl;
+	cout << "写出成功" << endl << "------------------------------" << endl;
+	ifs.close();
+}
+int main()
+{
+	Write();
+	Input();
+	system("PAUSE");
+	return 0;
+}

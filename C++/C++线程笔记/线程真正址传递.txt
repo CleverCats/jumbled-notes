@@ -1,0 +1,17 @@
+#include<iostream>
+#include<thread>
+using namespace std;
+void Fix(const int&a)
+{
+	cout << &a << endl;
+}
+int main()
+{
+	int  a;
+	a = 10;
+	thread thr(Fix, ref(a));
+	 //无论传值还是传址，线程中都是将传递过来的参数拷贝一份,如果想用引用传真正的引用,那么用ref(参数)
+	thr.join();
+	cout << &a << endl;
+	system("PAUSE");
+}

@@ -1,0 +1,50 @@
+#include<iostream>
+#include<string>              //总结:1.指定传入类型 2.参数类型模板化 2.整个类模板化做参数
+                                 // 推荐使用第一种,直观
+using namespace std;
+
+template<class T1,class T2>
+class Person
+{
+public:
+	void Infor(T1 name, T2 age)
+	{
+		this->m_name = name; this->m_age = age;
+	}
+public:
+	T1 m_name;
+	T2 m_age;
+};
+//void Sub(Person<string, int>&Per1)     //1.指定传入类型
+//{
+//	Per1.Infor("瑞瑞", 17);
+//	cout << "姓名:" << Per1.m_name << endl << "年龄:" << Per1.m_age << endl;
+//}
+////-------------------------------------------------------------------------------
+template<class T1,class T2>  //2.将参数类型模板化(即由显示指定法,变为了推导法,推导传入类所包含的参数的类)
+void Sub(Person<T1, T2>&Per1)
+{
+	Per1.Infor("瑞瑞", 17);
+	cout << "姓名:" << Per1.m_name << endl << "年龄:" << Per1.m_age << endl;
+	cout << "T1数据类型:" << typeid(T1).name() << endl << "T2数据类型:" << typeid(T2).name() << endl;
+}
+////-----------------------------------------------------------------------------
+//template<class T>//将整个类模板化
+//void Sub(T Per1)            //3.将整个类模板化,由系统自己推导
+//{
+//	Per1.Infor("瑞瑞", 17);
+//	cout << "姓名:" << Per1.m_name << endl << "年龄:" << Per1.m_age << endl;
+//	cout << "模板参数T数据类型:" << typeid(T).name() << endl;
+//}
+
+void test()
+{
+	Person<string,int>Per1;
+	Sub(Per1);
+}
+int main()
+{
+	test();
+	system("PAUSE");
+	return 0;
+}

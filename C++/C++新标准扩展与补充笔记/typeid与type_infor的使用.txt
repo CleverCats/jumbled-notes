@@ -1,0 +1,62 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class A
+{
+public:
+	void fun();
+	virtual ~A(){};
+};
+void A::fun()
+{
+	cout << "call A fun()" << endl;
+}
+class B:public::A
+{
+public:
+	void fun1();
+};
+void B::fun1()
+{
+	cout << "call B fun1()" << endl;
+}
+class C :public::A
+{
+public:
+	void fun2();
+};
+int main()
+{
+	A*p = new B;
+	A*p2 = new C;
+
+	//如果使用 typeid(p) == typeid(p2) 则会判断相等,因为这时判断的仅仅是p的类型,都是A*类的类型
+	//所以应该判断*p,检测指针指向的内存类型是否相同
+
+	//特别注意:如果基类没有虚函数,那么该判断语句就会不成立,只有存在虚函数,typeid才会对其求值,如果没有则	返回的就是静态类型(定义时的类型)
+	//typeid不会对其求值:因为是静态类型(定义时的类型,编译时就识别了),不会改变,编译器就不需要对其求值,也		能知道它的类型
+	if (typeid(*p) == typeid(*p2))
+	{
+		cout << "*p与*p2实际指向同一类  " << typeid(*p).name()<<endl;
+	}
+	else
+	{
+		cout << "*p与*p2实际指向不同类" << endl;
+
+		//输出类型名
+		cout << "typeid(*p)= " << typeid(*p).name() << endl;
+		cout << "typeid(*p1)= " << typeid(*p2).name() << endl;
+
+
+		//实际上typeid(obj)返回的是 一个**常量对象***的**引用** 这个常量对象的引用的类型为  std::type_info类型
+		//注意:因为返回的是常量对象的引用,所以需要使用 const 修饰 const std::type_info & p,使用常量匹配类型的引用接收
+		const std::type_info &tp = typeid(*p);
+
+		//等同于  cout << "typeid(*p)= " << typeid(*p).name() << endl;
+		cout << tp.name() << endl;
+	}
+	delete p;
+	delete p2;
+	system("PAUSE");
+	return 0;
+}

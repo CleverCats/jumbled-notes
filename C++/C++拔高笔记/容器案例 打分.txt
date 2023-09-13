@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+#include<string>
+#include<deque>
+#include<vector>
+#include<algorithm>
+#include<ctime>
+class Student
+{
+public:
+	Student(string name, int score);
+	string m_name;
+	int m_score;
+};
+Student::Student(string name, int score) :m_name(name), m_score(score){}
+
+void PrintSTL(deque<int> &de)  //打印分数
+{
+	cout << "分数:";
+	for (deque<int>::iterator i = de.begin(); i != de.end(); i++)
+	{
+		cout << *i<<" ";
+	}
+	cout << endl;
+}
+void AssignScore(vector<Student> &v)
+{
+	srand((unsigned int)time(NULL));
+	int m = 0;
+	deque<int>Dscore; 
+	for (vector<Student>::iterator i = v.begin(); i != v.end();i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			int score = rand() % 41 + 60;
+			Dscore.push_back(score);
+		}
+		int sum = 0; int avg = 0;
+		sort(Dscore.begin(), Dscore.end());  //排序
+		Dscore.pop_back(); Dscore.pop_front();  //去除头尾
+		for (int n = 0; n < Dscore.size();n++)
+		{
+			sum += Dscore[n];   //计算总分
+		}
+		avg = sum / Dscore.size();  //计算平均分
+		v[m].m_score = avg;  //获取平均分
+		cout << "姓名:" << v[m].m_name << " 平均分数:" << v[m].m_score;
+		m++;
+	
+		PrintSTL(Dscore);
+		
+		Dscore.clear();
+	}
+}
+void AssignInfo()
+{
+	string NameSeed = "ABCDE";
+	int score;
+	vector<Student>v;
+	for (int i = 0; i < 5; i++)
+	{
+		string name = "学生";
+		name += NameSeed[i];  //学生姓名
+		score = 0;   //学生分数
+		Student stu(name, score);  //学生对象实例化
+		v.push_back(stu);  //容器储存学生数据
+	}
+	AssignScore(v);  //数据赋值
+}
+
+int main()
+{
+	AssignInfo();
+	system("pause");
+	return 0;
+}

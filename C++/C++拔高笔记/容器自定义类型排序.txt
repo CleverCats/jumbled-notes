@@ -1,0 +1,55 @@
+#include<iostream>
+#include<string>
+#include<set>
+#include<ctime>
+using namespace std;
+class Student  //自定义person类型
+{
+public:
+	Student(string name, int age, int score);
+	string m_name;
+	int m_age;
+	int m_score;
+};
+class Mycompare    //自定义仿函数的数据类型
+{
+public:
+	bool operator()(const Student &stu1,const Student & stu2) //自定义仿函数实现优先级排序
+	{
+		return{ stu1.m_age != stu2.m_age ? stu1.m_age<stu2.m_age : stu1.m_score>stu2.m_score };
+		 //优先排序年龄较小,如果年龄相等优先分数高者
+	}
+};
+Student::Student(string name, int age, int score) :m_name(name), m_age(age), m_score(score){};
+void PrintSet(const set<Student,Mycompare> & S)   //打印set容器数据
+{
+	for (set<Student, Mycompare>::const_iterator i = S.begin(); i != S.end(); i++)  //遍历set容器数据
+	{
+		cout << "姓名:" << (*i).m_name << " 年龄:" << (*i).m_age << " 分数:" << (*i).m_score << endl;
+	}
+}
+void test()
+{
+	
+	string nameSeed = "ABCDEFGHIJKLMH";
+	set<Student,Mycompare>S;  //第一个参数为容器类型,第二个参数为仿函数(用于制定排序规则)的数据类型,set容器默认升序排序
+                                                                    //因为容器其实是模板,所以传递的是类型.函数则必须传对象
+	srand((unsigned int)time(NULL));  //随机数种子
+	for (int i = 0; i < 14; i++)
+	{
+		string name = "学生"; int age=0, score=0;
+		name += nameSeed[i];		//姓名
+		age = rand() % 11 + 13;          //年龄
+		score = rand() % 61 + 40;			    //分数
+		Student stu(name, age, score); 
+		S.insert(stu);
+	}
+	cout << "\t学生表" << endl;
+	PrintSet(S);  //遍历打印
+}
+int main()
+{
+	test();
+	system("PAUSE");
+	return 0;
+}

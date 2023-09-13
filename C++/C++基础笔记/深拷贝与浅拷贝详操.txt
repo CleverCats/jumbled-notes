@@ -1,0 +1,72 @@
+#include<iostream>
+using namespace std;
+class person
+{
+public:
+	person()
+	{
+		cout << "默认构造函数被调用" << endl;
+		system("pause");
+	}
+	person(int age, int height)
+	{
+		cout << "有参构造函数被调用" << endl;
+		m_age = age; m_height = new int(height); /*在堆区开辟int大小空间，
+												 用指针型变量m_height接收传递过来的参数地址*/
+		        //********堆区开辟的数据一般需要程序员手动释放
+	}
+	person(const person &p) //主动进行深拷贝操作
+	{
+		system("pause");
+		cout << "    \t调用拷贝构造函数对（执行B拷贝A）对象B的操作" << endl;
+		m_age = p.m_age;//初始化拷贝年龄
+		/*if (m_height != NULL) delete m_height; //主动释放堆区身高地址内存
+		***************因为A，B的身高地址相同直接释放会发生地址的重复释放错误 ，
+		应进行下面的深拷贝操作，重新开辟新空间赋值*/
+		cout << "   \t被拷贝对象(A)身高地址:" << p.m_height << endl; system("pause");
+		cout << "   \tB重新开辟内存空间(防止相同地址 导致相同地址释放)，储存拷贝的数值" << endl;
+		cout << "        \t***使原地址仅存在于被拷贝的对象（A）的身高参数中***" << endl; system("pause");
+		                //初始化拷贝身高
+	    m_height= new int(*p.m_height); //开辟内存空间，储存拷贝的数值，然后在释放新开辟的内存空间
+		cout << "    \t拷贝成功" << endl;
+		cout << "   \t新开辟的身高内存地址:" << m_height << endl; system("pause");
+	}
+	~person()
+	{
+		system("pause");
+		              //因为栈是先进后出原则，所以在这里是B把A的数据拷贝后会先B进行析构操作
+		cout << "   \t调用析构函数" << endl;; system("pause");
+		
+		if (m_height != NULL)
+		{
+			cout << "   \t开始释放身高地址内存"<<endl;
+			delete m_height; system("pause");
+			m_height = NULL; //指针地址置空，防止野指针
+			cout << "\t地址内存已释放" << endl;
+		}
+
+		
+	}
+	int m_age;
+	int*m_height; //定义指针型变量
+};
+void sub1()
+{
+	person A(17,160);
+	cout << "\tA的姓名" << A.m_age << endl << "\tA的身高" << *A.m_height << endl
+		 << "\tA的身高地址" <<A.m_height << endl;  //打印结果
+	person B(A); //B拷贝A的属性           //************************可见A,B的身高地址相同，所以在释放内存的时候会出错，目前还未进行释放操作
+	                            //若默认系统自定义拷贝函数 如果调用进行全值拷贝则不能有效避免这种浅拷贝错误
+								//应在拷贝函数中进行主动控制，达到深拷贝，避免浅拷贝可能出先的地址重复释放问题
+	cout << "\tB的姓名" << B.m_age << endl << "\tB的身高" << *B.m_height 
+		 << "\tB的身高地址" << B.m_height<<endl;
+}
+int main()
+{
+	sub1();
+
+	system("pause");
+	cout << "      \t子函数调用结束,内存已全部成功释放" << endl;
+	system("pause");
+	return 0;
+}

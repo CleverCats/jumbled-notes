@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+class person
+{
+	friend ostream& operator<<(ostream& cout, person &p); //全局函数作友元
+public:
+	//ostream& operator<<(ostream& cout) /*在成员函数中重载左移运算符,(可以通过,但不合适)
+	//								   使用时变成了 对象 << cout */
+	//{
+	//	cout << this->m_age << endl;
+	//	cout << this->m_score << endl;
+	//	return cout;
+	//}
+public:
+	person(int age,int score) //构造函数赋初值
+	{
+		this->m_age = age;
+		this->m_score = score;
+	}
+private:
+	int m_age;
+	int m_score;
+};
+      //只能利用全局函数重载左移运算符
+ostream& operator<<(ostream& cout, person &p) //返回引用使一次输出实际只有一个cout
+{
+	cout << "年龄: " << p.m_age << endl;
+	cout << "分数: " << p.m_score << endl;
+	return cout;
+}
+int main()
+{
+	person A(17, 90);
+	//实际为  operator<<(cout,A);
+	cout << A <<"左移运算符调用" <<endl;
+	//实际为  A.operator<<(cout);
+	//A << cout << "HELLOW";  可以执行,但顺序颠倒,不符合习惯
+	system("pause");
+	return 0;
+}

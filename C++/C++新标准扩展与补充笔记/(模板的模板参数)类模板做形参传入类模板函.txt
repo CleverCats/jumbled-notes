@@ -1,0 +1,33 @@
+#include<iostream>
+#include<string>
+#include<list>
+#include<vector>										   //因为类模板也是一种类型,例如容器 vector<int> 便是一种类模板类型,可变参类模板同样是一种类型
+template<typename T,template<class> class container>       //如果需要将类模板当作实参传递给这里的模板形参 应该使用 
+														   //template<class> class container 或者class改为typenmame
+class myclass                                              //class作用是易于分辨是类模板参数
+	                                                       //template<class> class (或者typename)相当于类模板类型  container相当于形参接收实参
+{
+public:
+	container<T>myc;   //可变参类模板类型生成对象myc 作为成员
+public:
+	myclass()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			myc.push_back(i);
+		}
+		for (auto &itr : myc)
+		{
+			std::cout << itr << std::endl;
+		}
+	}
+};
+template<typename T> using ConVect = std::vector<T, std::allocator<T>>;		 //给vector取别名,vector的第二个参数为分配器(管理容器内存分配).有默认值,
+template<typename T> using ConList = std::list<T, std::allocator<T>>;        //但在传参时类模板形参推导不出来,此时需要显示指定出来,并用using起别名
+int main()                                                           
+{
+	myclass<int, ConVect> obj;   //obj和obj2同时进行创建时会报错,原因未知,可能是编译器的问题
+	//myclass<int,ConList> obj2;
+	system("PAUSE");
+	return 0;
+}

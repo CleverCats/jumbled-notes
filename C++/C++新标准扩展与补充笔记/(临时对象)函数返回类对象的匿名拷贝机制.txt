@@ -1,0 +1,61 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class A
+{
+public:
+	A()
+	{
+		cout << "普通构造" << endl;
+	}
+	A(const A& a)
+	{
+		cout << "调用拷贝构造" << endl;
+	}
+	~A()
+	{
+		cout << "调用析构函数" << endl;
+	}
+};
+
+//A&& fun(A&a)
+A fun(A&a)
+{
+	A temp;
+
+	//因为返回的是一个出了函数作用域就立即将销毁的值,不允许外界对其更改,所以系统在main中采用了匿名的拷贝构造的操作接收该return temp这个对象
+	//系统相当于在main中做了 A temp1（temp）; 所以 fun("Hellow world hh", 'w', a); 相当于 temp1;
+	//同时,因为 temp1是一个匿名,所以执行完  fun("Hellow world hh", 'w', a) 后,匿名对象马上自动销毁
+
+	//注意:临时的匿名对象不是在fun(A &a)中产生的,而是在吗main()函数中产生的
+	return temp;
+}
+void test()
+{
+	//实例化对象 a
+	A a;
+
+	//fun( a);相当于匿名对象temp1,执行完该语句后匿名对象马上销毁
+	//fun( a);
+
+	//temp2接收匿名对象,该语句不是赋值操作,而是相当于给匿名对象起名,使其不会执行完后马上被销毁
+	//所以并不是先构造了匿名对象,然后匿名对象与temp2之间发生拷贝构造这样的过程、
+	//而是相当于是这个匿名对象temp1(程序员看不见),有了一个真正的名字 - temp2;
+	//所以仅仅调用一次拷贝构造函数,且是发生在匿名对象temp1与temp之间的拷贝,然后给匿名对象名称temp2;
+	A temp2 = fun( a);
+
+	//证明:
+	//A&& temp3=fun(a); //系统允许,证明fun(a)确实是一个右值(临时的匿名对象),所以可以被右值引用绑定
+	
+}
+int main()   //匿名对象也就是临时对象,是右值,一般在执行完后立即自动销毁
+{
+
+	test();
+	//未给匿名对象起名时
+	//先析构 a在析构 temp 最后析构 temp1(匿名对象,程序员不可见,执行完 fun(a)后立即执行)
+	//给匿名对象起名时  先析构 a在析构 temp 最后析构 temp2(有了名字的匿名对象)
+	system("pause");
+	return 0;
+
+}

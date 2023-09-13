@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+class person
+{
+public:
+	person(int age)
+	{
+		this->m_age = age; //赋初值
+	}
+	bool operator==(person &p)  //重载相对关系运算符
+	{
+		if (this->m_age == p.m_age)     //其他运算符同理 
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+private:
+	int m_age;  //指针型变量
+};
+int main()
+{
+	person A(17), B(18);
+	if (A == B)cout << "A 和 B 一样大" << endl;
+	else cout << "A 和 B 不一样大" << endl;
+	system("PAUSE");
+	return 0;
+}

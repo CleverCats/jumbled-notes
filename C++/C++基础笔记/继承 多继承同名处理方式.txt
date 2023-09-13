@@ -1,0 +1,43 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Father1  //父类1
+{
+public:
+	Father1()
+	{
+		this->money = 40000;
+	}
+public:
+	int money;  //与另一个父类成员函数同名
+};
+class Father2  //父类1
+{
+public:
+	Father2()
+	{
+		this->money = 30000;
+	}
+public:
+	int money; //与另一个父类成员函数同名
+};
+               //多继承
+class Son1 :public Father1,public Father2  //不加继承方式，默认继承方式为私有继承
+{
+public:
+	Son1()     //与父类中有相同成员函数
+	{
+		this->money = 10000;
+	}
+public:
+int money;
+};
+int main()
+{
+	Son1 S1; //实例化对象
+	cout << S1.money << endl; //本身的
+	cout << S1.Father1::money << endl; //继承Father1的
+	cout << S1.Father2::money << endl; //继承Father2的
+	system("PAUSE");
+	return 0;
+}

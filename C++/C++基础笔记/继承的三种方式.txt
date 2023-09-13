@@ -1,0 +1,62 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Father  //父类 或者称为 基类
+{
+public:
+	int age;
+protected:
+	int money;
+private:
+	string lover;
+};
+class Son1 :public Father  //公有继承，父权限在子类继承后相应的权限不变
+                                   //继承时会先创建一个父类,也就是先调用父类的构造函数，在调用子类的构造函数
+                                      //因为是栈区，析构的时候相反，先析构子类，在析构父类
+{
+public:
+	void Fun()
+	{
+		this->age = 50;
+		this->money = 10000;
+		//this->lover 为父类的私有内容， 禁止调用，但存在，只是被服务器隐藏了
+	}
+};
+class Son2 :protected Father  //以保护权限的方式继承父类，继承后相应的权限变成保护权限
+{
+public:
+	void Fun()
+	{
+		this->age = 50;      
+		this->money = 20000;
+		//this->lover  禁止调用，但存在，只是被服务器隐藏了
+	}
+};
+class Son3:private Father  //以私有权限的方式继承父类，继承后相应权限变成私有权限
+{
+public:
+	void Fun()
+	{
+		this->age = 50;
+		this->money = 20000;
+		//this->lover  禁止调用，但存在，只是被服务器隐藏了
+	}
+};
+class GrandSon1 :protected Son1  //爷爷的孙子类以保护权限的方式继承爷爷的儿子类,权限继承后规则同上
+{
+public:
+	void Fun()
+	{
+		this->age = 20;
+		this->money = 1000;
+	}
+};
+int main()
+{
+	Son1 S1;
+	S1.Fun(); //调用Son1的继承
+	cout << S1.age << endl;  //为继承的公共权限，可以访问
+	//cout<<S1.money; 为继承的保护权限，类外一般不可访问
+	system("PAUSE");
+	return 0;
+}

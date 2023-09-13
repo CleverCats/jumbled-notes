@@ -1,0 +1,51 @@
+#include<iostream>
+#include<string>
+using namespace std;
+struct student
+{
+	string name;int age;int score;
+};
+struct teacher
+{
+	int id;string name;string sex;
+
+	struct student Stu[5];     //声明学生数组结构体
+};
+void accolatspace(teacher *p,int len)
+{
+	string Sp="ABCDE";
+	for(int i=0;i<3;i++)
+	{
+		p->name="Teacher_";
+		p->name+=Sp[i];  //利用指针遍历数组进行复制
+			p->id=1008611;
+			p->sex="女";
+	for (int j=0;j<5;j++)
+	{
+			(*p).Stu[j].name="Student_";
+			(*p).Stu[j].name+=Sp[j];
+			(*p).Stu[j].age=17;
+			(*p).Stu[j].score=80;
+	}
+			p++;			
+	}
+};
+
+int main()
+{
+	struct teacher Teach[3];
+	int len=sizeof(Teach)/sizeof(Teach[0]);
+	accolatspace(Teach,len);
+	for(int i=0;i<3;i++)
+	{
+		cout<<"ID:"<<Teach[i].id<<"\t姓名:"<<Teach[i].name<<"\t性别:"<<Teach[i].sex<<endl<<"学生:"<<endl;
+		for(int j=0;j<5;j++)
+		{
+		cout<<"ID:"<<Teach[i].Stu[j].name<<"\t年龄:"<<Teach[i].Stu[j].age<<"\t分数:"<<Teach[i].Stu[j].score<<endl;
+		cout<<endl;
+		}
+	}
+	system("pause");
+	return 0;
+
+}

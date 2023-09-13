@@ -1,0 +1,23 @@
+#include<iostream>
+using namespace std;
+class person
+{
+public:
+
+	int operator()(int num1,int num2)  //重载小括号（）即重载函数调用运算符,也被称为仿函数
+	{
+		return num1 + num2;
+	}
+	
+};
+int main()
+{
+	person Add;
+	int ret1=Add.operator()(10, 20);  //有名对象调用,伪函数(重载函数)完整调用方法
+	int ret2 = Add(20, 30);   //有名对象调用,伪函数(重载函数)简化调用方法
+	cout << ret1 << endl;
+	cout << ret2 << endl;
+	cout << person()(30,40) << endl;  //匿名函数对象调用仿函数 **person（）会创建一个匿名无参的对象,并且在调用完毕后立即释放**
+	system("PAUSE");
+	return 0;
+}

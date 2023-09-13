@@ -1,0 +1,16 @@
+请编写一个cmake编译脚本, 要求在项目空间的根目录生成名为nginx的可执行文件
+代码文件结构如下, 都只存在一级目录，其中_include文件夹存放的是.h文件，其它目录下都都.cxx文件,编写完成脚本后告诉我具体使用方法
+
+抱歉，我漏了一个文件，文件目录为,新添加的logs中也是.cxx文件
+_include
+app
+logic
+logs
+misc
+net
+proc
+signal
+
+GuoMingChuan123
+
+set(CMAKE_CXX_FLAGS, "${CMAKE_CXX_FLAGS} -g -02 -Wall")

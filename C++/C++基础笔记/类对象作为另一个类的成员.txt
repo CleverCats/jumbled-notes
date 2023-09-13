@@ -1,0 +1,44 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class phone
+{
+public:
+	phone(string Pname) :Pname(Pname)
+	{
+		cout << "phone的构造函数调用" << endl;
+	}
+	~phone()
+	{
+		cout << "phone的构造函数调用" << endl;
+	}
+		string Pname;
+};
+class person
+{ 
+public:
+	person(string mname, string mphone) : mname(mname), mphone(mphone)
+	{
+		cout << "person的析构函数调用" << endl;
+	}
+	~person()
+	{
+		cout << "person的析构函数调用" << endl;
+	}
+	string mname;
+	phone mphone;  //类对象，作为另一个类的成员
+};
+void Test()
+{
+	person Stu("张三", "华为play");
+	//在此phone mphone是person Stu 的一个成员元素，相当于的的器官
+	//先有器官的创建，才会组成人的整体，所以先进行phone mphone的创建后进行 person Stu
+	//栈先进后出的原则，所以释放内存时，先释放最后构建的，即phone mphone
+	cout << Stu.mname << "买了  " << Stu.mphone.Pname << endl;
+}
+int main()
+{
+	Test();	
+	system("pause");
+	return 0;
+}

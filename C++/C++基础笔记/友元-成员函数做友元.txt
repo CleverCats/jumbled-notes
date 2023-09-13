@@ -1,0 +1,63 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Home;  //预先声明Home类的存在,使Friend的成员属性 Home*m_Home可识别
+class Friend  //Friend类创建
+{
+public:
+	Friend(string type); //构造函数
+	void visit1(); //普通访问函数声明
+	void visit2(); //特殊访问函数声明
+private :
+	string h_caption;
+	Home*m_Home;  //Home类指针
+};
+class Home   //家类创建
+{
+	friend void Friend::visit2();//声明Friend类中的Visit2()为Home类的友元函数
+	                               //可以访问私人内容
+public:
+	Home();  //构造函数
+public:
+	string drawingroom;
+private:
+	string bedroom;
+};
+	                     //类外实现
+Home::Home()
+{
+	this->drawingroom = "客厅";
+	this->bedroom = "卧室";
+}
+Friend::Friend(string type)
+{	
+	this->h_caption = type; 
+	m_Home = new Home; //堆区创建Home类对象,而后会调用Home对象的构造函数
+}
+void Friend::visit1() //普通访问实现
+{
+	cout << this->h_caption << "正在访问 " << this->m_Home->drawingroom << endl;
+	//cout << this->h_caption << "正在访问 " << this->m_Home->bedroom<< endl;
+}
+void Friend::visit2() //友元访问实现
+{
+	cout << this->h_caption << "正在访问 " << this->m_Home->drawingroom << endl;
+	cout << this->h_caption << "正在访问 " << this->m_Home->bedroom << endl;
+}
+void test01()
+{
+	Friend A("Common Friend");
+	A.visit1(); //普通访问
+}
+void test02()
+{
+	Friend B("Girl Friend");
+	B.visit2(); //特殊访问
+}
+int main()
+{
+	test01();  //调用
+	test02();
+	system("pause");
+	return 0;
+}

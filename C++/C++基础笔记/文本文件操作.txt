@@ -1,0 +1,103 @@
+#include<iostream>
+#include<string>
+#include<fstream> //文件流 头文件
+using namespace std;
+void WriteFlile()
+{
+	ofstream ofs;    //创建流对象
+	//ofstream写文件
+	//ifstream读文件
+	//fstream 读写文件
+	ofs.open("test.txt", ios::out);//打开位置(默认为项目路径),设定打开方式
+	ofs << "姓名:王二狗" << endl; //输入内容
+	ofs << "性别:男" << endl;
+	ofs << "年龄:24" << endl;
+	ofs.close();  //关闭文件
+}
+void ReadFile()
+{	
+//------------------------------------------------------------------------
+	cout << "               方法一" << endl;
+	ifstream ifs1;
+	ifs1.open("test.txt", ios::in);
+	if (!ifs1.is_open())
+	{
+		cout << "打开失败" << endl;
+		return;
+	}
+	char buffer1[1024] = { 0 }; //初始化字符数组
+	while (ifs1 >> buffer1) //注意:此方法遇到空格会被判断为一行
+		                 //sf>>buffer每次执行后读出一行数据,然后在执行cout
+	{
+		cout << buffer1 << endl;
+	}
+	ifs1.close();
+//------------------------------------------------------------------------
+	cout << "               方法二" << endl;
+	ifstream ifs2;
+	ifs2.open("test.txt", ios::in);
+	if (!ifs2.is_open())
+	{
+		cout << "打开失败" << endl;
+		return;
+	}
+	char buffer2[1024] = { 0 };
+	while (ifs2.getline(buffer2, sizeof(buffer2)))
+		//此方法可以读出完整一行,直到换行
+	{
+		cout << buffer2 << endl;
+	}
+	ifs2.close();
+//------------------------------------------------------------------------
+	cout << "               方法三" << endl; 
+	ifstream ifs3;
+	ifs3.open("test.txt", ios::in); 
+	if (!ifs3.is_open())  //同方法二效果基本相同,一行一行读取
+	{
+		cout << "打开失败" << endl;
+		return;
+	}
+	string buffer3;
+	while(getline(ifs3,buffer3))
+	{
+		cout << buffer3 << endl;
+	}
+	ifs3.close();
+//------------------------------------------------------------------------	
+	cout << "               方法四" << endl;
+	ifstream ifs4;
+	ifs4.open("test.txt", ios::in);
+	if (!ifs4.is_open())  //同方法二效果基本相同,一行一行读取
+	{
+		cout << "打开失败" << endl;
+		return;
+	}
+	
+
+/*注意 中文字符占2个字节，非中文占一个字节
+	例如："abc中国"
+	当我们以每一个字节读取文件时，
+	此时会读到汉字的一半，此时就会产生乱码。*/
+	char chr; //字节流读取
+	while ( (chr=ifs4.get() )!=EOF) //将文件数据一字节一字节读取,直到文件尾部
+
+		//get()每次只读区一个字节
+	{        //注意括号,先优先读取完毕,再判断是读取到文件尾部
+		cout << chr;
+	}
+	ifs4.close();
+}
+int main()
+{
+	WriteFlile();  //写文件
+	ReadFile();  //读文件
+	system("PAUSE");
+	return 0;
+}
+/*打开方式:1. ios::in 为读文件来打开文件
+           2. ios::out 为写文件来打开文件,覆盖原先文件
+		   3. ios::ate 初始位置:文件尾
+		   4. ios::app 以追加方式写文件
+		   5. ios::trunc 如果文件存在先删除,在创建
+		   6. ios::binary 二进制方式
+		   */

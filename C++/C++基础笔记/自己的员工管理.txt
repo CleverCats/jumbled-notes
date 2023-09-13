@@ -1,0 +1,162 @@
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+//职工管理开始界面
+void StartMenu()
+{
+	cout << "                       *********职工管理系统界面*********" << endl;
+	cout << "                       ********* 1.退出当前系统**********" << endl;
+	cout << "                       ********* 2.添加职工信息 *********" << endl;
+	cout << "                       ********* 3.显示职工信息 *********" << endl;
+	cout << "                       ********* 4.删除职工信息 *********" << endl;
+	cout << "                       ********* 5.修改职工信息 *********" << endl;
+	cout << "                       ********* 6.查找职工信息 *********" << endl;
+	cout << "                       ********* 7.按照编号排序 *********" << endl;
+	cout << "                       ********* 8.清空所有文档 *********" << endl;
+	cout << "                       **********************************" << endl;
+}
+class PerInFormation
+{
+public:
+	void OutputInformation()  //写入员工信息
+	{
+		ofstream ofs("test.txt", ios::app);
+		if(!ofs.is_open())
+		{
+			cout << "文件打开失败" << endl; return;
+		}
+			ofs << "编号: " << this->m_id << endl
+				<< "姓名: " << this->m_name << endl
+				<< "部门: " << this->m_depart << endl;
+			ofs.close();
+	}
+	PerInFormation(int id, string name, int depart)
+	{
+		m_id = id;  m_name = name;  m_depart = depart; //初始化员工信息
+		OutputInformation();
+	}
+public:
+	int m_id;   //职工编号
+	string m_name;  //姓名
+	int m_depart;  //部门编号
+};
+class DoFile
+{
+public:
+	void InputInformation()   //读取员工信息
+	{
+		string buffer; int i = 0;
+		ifstream ofs("test.txt", ios::in);
+		while (getline(ofs, buffer))    //读取员工数据信息
+		{
+			sum++; id_p = new string[sum]; name_p = new string[sum]; depart_p = new string[sum];
+			if (buffer == "部门: 1")buffer = "普通员工";
+			if (buffer == "部门: 2")buffer = "经理";
+			if (buffer == "部门: 3")buffer = "老板";
+			if (i <= 3)  //个人信息在一行输出
+			{
+				cout << buffer << "\t";
+				i++;
+
+				if (i == 1)id_p[sum] = buffer;       //将数据存入相对应数组
+				if (i == 2)name_p[sum] = buffer;
+				if (i == 3)depart_p[sum] = buffer;
+
+				if (i == 3)
+				{
+					i = 0; cout << endl;
+				}
+			}
+			
+		}
+		ofs.close();  //关闭文件
+	}
+	
+public:
+static int sum;
+string * id_p;
+string * name_p;
+string *depart_p;
+};
+int DoFile::sum = 0;
+//---------------------------------------------------------------
+//void InputInformation()   //读取员工信息
+//{
+//	string buffer; int i=0;
+//	ifstream ofs("test.txt", ios::in);
+//	while (getline(ofs,buffer))    //读取员工数据信息
+//	{
+//		if (buffer == "部门: 1")buffer = "普通员工";
+//		if (buffer == "部门: 2")buffer = "经理";
+//		if (buffer == "部门: 3")buffer = "老板";
+//		if (i <= 3)  //个人信息在一行输出
+//		{
+//			cout << buffer<<"\t";
+//			i++;
+//			if (i == 3)
+//			{
+//				i = 0; cout << endl;
+//			}
+//		}
+//		
+//	}
+//	ofs.close();  //关闭文件
+//}
+//---------------------------------------------------------------
+void DeleteInformation()
+{
+
+}
+void DepartMenu()  //部门分类
+{
+	cout << "1.普通员工" << endl
+		 << "2.经理" << endl
+		 << "3.老板" << endl;
+}
+int main()
+{ 
+	while (true)
+	{
+		StartMenu();  //显示职工系统菜单
+		int select = 0;
+		cout << "等待操作..." << endl << "选择:";
+		cin >> select;        //用户操作
+		switch (select)
+		{
+		case 1:
+		{
+			cout << "系统即将关闭" << endl;   //关闭系统
+			system("PAUSE");
+			return 0;
+		}
+		case 2:   //实现员工添加
+		{
+			int number; int id, depart; string name;
+			cout << "添加员工人数:"; cin >> number;
+			for (int i = 0; i < number; i++)
+			{
+				cout << "编号: "; cin >> id;
+				cout << "姓名: "; cin >> name;
+				DepartMenu();   //职位表
+				cout << "选择: "; cin >> depart;
+				PerInFormation(id, name, depart); //输入员工信息
+				cout << "添加成功" << endl; system("PAUSE");
+				system("cls");
+				StartMenu();
+				cout << "继续添加" << endl;
+			}
+			cout << "添加完毕" << endl; system("PAUSE"); system("cls"); break;
+		}
+		case 3:
+		{
+			DoFile A;
+			 A.InputInformation(); system("PAUSE"); break;
+		}
+		}
+		system("cls");
+	}
+	cout << DoFile::sum << endl;
+	system("PAUSE");
+	return 0;
+}

@@ -1,0 +1,44 @@
+-:在命令的后面加"-"表示后面跟的是选项;
+
+sudo ps -eo pid,ppid,sid,tty,pgrp,comm,stat | grep -E 'bash|PID|nginx'
+释:ps命令用于显示当前进程 (process) 的状态;-:在命令的后面加"-"表示后面跟的是选项; -e 显示所有进程； -o 指定格式(-f全格式);
+   |:管道符号 ，command 1 | command 2 他的功能是把第一个命令command 1执行的结果作为command 2的输入传给command 2
+    stat:进程状态
+    例如:ls -l | more 该命令列出当前目录中的任何文档，并把输出送给more命令作为输入，more命令分页显示文件列表。(即竖杠来分隔要筛选的条件)
+   -E 或 --extended-regexp : 将样式为延伸的正则表达式来使用。
+正则表达式:
+正则表达式，又称规则表达式。(英语:Regular Expression，在代码中常简写为regex、regexp或RE)，
+计算机科学的一个概念。正则表达式通常被用来检索、替换那些符合某个模式(规则)的文本。
+目的:
+给定一个正则表达式和另一个字符串，我们可以达到如下的目的:
+1. 给定的字符串是否符合正则表达式的过滤逻辑(称作"匹配"):
+2. 可以通过正则表达式，从字符串中获取我们想要的特定部分。
+
+
+signal(SIGHUP,SIG_IGN); 拦截SIGNALUP信号函数
+补充:相当于nohup命令启动程序,系统不会在界面输出,而是会生成一个nohup.out文件,所有的printf打印到该文件中
+若bash进程被干掉,此进程也会忽略SIGNALUP信号,成为孤儿进程，被老祖宗进程init收留)
+
+setsid命令:启动一个孤儿进程,不属于任何终端,ppid=1; 例 setsid ./nginx 
+
+./nginx &后台运行
+补充:后台运行下可以执行命令行命令,前台则不可以
+
+fg恢复前台运行
+
+sudo find / -name "signal.h"| xargs grep -in "SIGHUP"
+释:find:查找;/ -name 从根目录开始,在所有文件中找到名为signal.h的文件;
+   xargs:限定使在signal.h内容中搜索;grep文本搜索命令;i:忽略大小写;n:显示搜索到的行号;"SIGHIP"需要搜索的关键字
+
+sudo strace -e trace=signal -p 1184
+strace工具:跟踪器
+ -e strace=signal  跟踪所有与系统信号有关的系统调用;
+释:strace跟踪命令 ,-e所有进程 ,trace痕迹=signal信号,-p 1184 限制跟踪 pid=1184的进程
+
+Kill命令:向指定进程发送一个命令,默认命令参数为 SIGTERM（终止进程命令）
+Kill -数字 进程id ; 能发出一个与该数字对应的信号 -1为 SIGHUP信号
+
+sudo ./nginx -s reload
+释:实际上这条命令等同于kill -SIGHUP pid;
+作用:向目标worker进程发送一个SIGHUP信号给老的mask进程,该进程为守护进程,SIGHUP信号这里不执行默认功能,只是进行一个通知作用
+作为传递信息使用,接收表示nginx的配置文件发生的改变,需要重写加载配置文件.并生效

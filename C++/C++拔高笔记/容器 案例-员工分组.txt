@@ -1,0 +1,84 @@
+#include<iostream>
+#include<string>
+#include<ctime>
+#include<vector>
+#include<map>
+using namespace std;
+class Staff   //员工类
+{
+public:
+	Staff(string name, int salary, int depart);
+	string m_name;  //姓名
+	int m_salary;  //月薪
+	int m_depart; //部门
+};
+Staff::Staff(string name, int salary, int depart) :m_name(name), m_salary(salary), m_depart(depart){};
+
+void PrintInfo(const multimap<int, Staff> &Msta)  //打印员工信息
+{
+	int select; //选择
+	cout << "1.遍历员工数据" << endl;
+	cout << "2.遍历指定部门员工" << endl;
+	cout << "选择"; cin >> select;
+	switch (select)
+	{
+	case 1:   //全遍历打印
+	{
+		for (multimap<int, Staff>::const_iterator i = Msta.begin(); i != Msta.end(); i++)
+		{
+			cout << "部门编号:" << (*i).first << " 姓名:" << (*i).second.m_name << " 月薪:" << (*i).second.m_salary << endl;
+		}
+		break;
+	}
+	case 2:
+	{
+		int sel = 0; 
+		cout << "1.策划部" << endl << "2.美术部" << endl << "3.研发部" << endl;
+		cout << "选择:"; cin >> sel;
+		multimap<int, Staff>::const_iterator it = Msta.find(sel); //创建 it multimap迭代器变量
+		int sum = Msta.count(sel); it = Msta.find(sel);
+		if (sel == 1)cout << "策划部" << endl;
+		if (sel == 2)cout << "美术部" << endl;
+		if (sel == 3)cout << "研发部" << endl;
+		for(; sum > 0; sum--, it++)  //已经按部门排序,所以只需要获得count部门key人数,获得第一个key的value的迭代器,然后递增就可以遍历
+		{
+			cout << "   姓名:" << (*it).second.m_name << " 月薪:" << (*it).second.m_salary << endl;
+		}
+		break;
+	}
+	default: cout << "Error" << endl;
+	}
+}
+void AssignDepart(vector<Staff>&Vsta)  //部门为索引插入map容器
+{
+	multimap < int, Staff>Msta;
+	for (vector<Staff>::iterator i = Vsta.begin(); i != Vsta.end(); i++)
+	{
+		Msta.insert(make_pair((*i).m_depart, (*i)));  //部门编号作索引multimap储存员工数据，make_pair（key,value）对组
+	}
+	PrintInfo(Msta);  //打印遍历信息函数
+}
+void CreatStaff()			  //构造员工
+{
+	vector<Staff>Vsta;
+	srand((unsigned int)time(NULL));
+	for (int i = 0; i < 10; i++)
+	{
+		string name = "员工";
+		string nameSeed = "ABCDEFGHIJ";
+		name += nameSeed[i];   //姓名
+		int salary = rand() % 4000 + 2000;
+		int depart = rand() % 3 + 1;
+		Staff Sta(name, salary, depart);    //实例化员工
+		Vsta.push_back(Sta);  // vector储存员工
+	}
+	AssignDepart(Vsta); //map容器以部门编号为key储存信息
+}
+
+
+int main()
+{
+	CreatStaff();
+	system("PAUSE");
+	return 0;
+}

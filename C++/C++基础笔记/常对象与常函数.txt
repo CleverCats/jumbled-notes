@@ -1,0 +1,31 @@
+#include<iostream>
+using namespace std;
+#include<string>
+class Student  
+{
+public:                   //this相当于指针常量 int *const p不能改变指针指向,只能修改指向的值
+	void sub1() const //常函数声明 const修饰的其实是this指针相当于 const int*const p,变成只读状态
+	{                    
+		/*this->m_name默认存在*/ 
+		/*this->m_Number默认存在*/
+		/*m_name = "张三" 常函数不可以修改一般成员属性*/
+		m_Number = 200049;   //可以修改特殊声明的成员的属性
+	}
+	void sub2()     //非常函数
+	{
+
+	}
+	string m_name;
+	mutable int m_Number; //特殊声明 mutabel （可变的）使其在常对象，常函数中可修改
+};
+
+int main()
+{
+	const Student Stu1; //创建常对象
+	//Stu1.m_name="李四";   常对象不能修改普通的成员变量
+	Stu1.m_Number = 200094;  //常对象可以修改(mutable)特殊的成员变量
+	//Stu1.sub2();  常对象只能调用常函数
+	Stu1.sub1();    //常对象可以调用常函数
+	system("pause");
+	return 0;
+}

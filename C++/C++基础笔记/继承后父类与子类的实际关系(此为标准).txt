@@ -1,0 +1,59 @@
+#include<iostream>  
+
+//总结:继承后如果与子类没有同名成员,那么子类与父类共享数据,数据地址相同,无论加不加作用域都是访问的一个地址,因此也可以改变共享数据
+//如果有同名函数,那么同名的成员数据不共享,地址不同，但因为继承,子类可以通过作用域调用父类的同名成员,改变父类不会改变子类,改变子类不会改变父类
+                                                                       //（或者使用using在子类中 声明）
+
+using namespace std;
+class A
+{
+public:
+	int x = 10;
+	int y = 20;
+	void print(int)
+	{
+		cout << "call A print_int_int" << endl;
+	}
+};
+class  B :public A
+{
+public:
+	int y = 20;
+	void print(int)
+	{
+		cout << A::x << endl;
+		cout << "call B print_int" << endl;
+	}
+
+};
+int main()
+{
+	B b;
+
+	//与如下的成员变量调用同理
+	b.print(10);
+	b.A::print(10);
+
+	//输出结果30,30 且地址相同
+	//因为x是父类独有有,继承后子类与父类共享,所以地址相同,数据相同
+	b.x = 20;   //父类 x
+	b.A::x = 30;  //父类 x
+	cout << "b.x="<<b.x <<"\tadress=  "<<&b.x << endl;
+	cout << "b.A::x=" << b.A::x << "\tadress=  " << &b.A::x << endl;
+
+
+//输出结果为30,,40且地址不同
+//因为父类与子类具有同名的成员,此时父类与子类的同名成员在各自的作用域,并不是共享数据,但因为继承关系,子类可以调用父类的数据,此时需要加作用域
+	b.y = 30;   //子类 y
+	b.A::y = 40;  //父类 y
+	cout << "b.y=" << b.y << "\tadress=  " << &b.y<< endl;
+	cout << "b.A::y=" << b.A::y << "\tadress=  " << &b.A::y << endl;
+
+	//输出结果为30,因为x是父类独有有,继承后子类与父类共享
+	//所以b.x与b.A::x地址相同 
+	/*	b.x = 20;
+		b.A::x = 30;     因此这两句都会改变共享数据的值*/
+	b.print(10);
+	system("pause");
+	return 0;
+}

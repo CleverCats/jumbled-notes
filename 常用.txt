@@ -1,0 +1,34 @@
+[git]
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+serein
+[其它]
+protobuf 序列化工具(消息转换)(Json也是但可视化更强-推荐)
+nginx 负载均衡, 正/反向代理
+
+smbclient //60.204.204.220/samba_user -U samba_user
+\\60.204.204.220\samba_user
+C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe config --default-user serein
+
+GuoMingChuan123
+\\60.204.204.220\shared
+192.168.0.185
+sudo ps -eo pid,ppid,sid,tty,pgrp,comm,stat,cmd | grep -E 'bash|PID|nginx'
+sudo ps -eo pid,ppid,sid,tty,pgrp,comm,stat,cmd | grep -E 'client'
+valgrind --tool=memcheck --leak-check=full --show-reachable=yes ./../client 192.168.0.185 444 15
+要启动nginx，您可以使用以下的方法：
+
+如果您是在Linux系统上安装了nginx，您可以使用systemctl命令来管理nginx服务，例如1：
+sudo systemctl start nginx # 启动nginx服务
+sudo systemctl stop nginx # 停止nginx服务
+sudo systemctl restart nginx # 重启nginx服务
+sudo systemctl reload nginx # 重新加载nginx配置文件
+netstat -anp | grep 8000 #查看8080端口是否处于监听态
+如果您是在Windows系统上安装了nginx，您可以使用nginx.exe命令来控制nginx进程，例如2：
+nginx.exe # 启动nginx进程
+nginx.exe -s stop # 停止nginx进程
+nginx.exe -s quit # 优雅地停止nginx进程
+nginx.exe -s reload # 重新加载nginx配置文件
+
+curl ifconfig.me 查看公网ip
+vocode项目多开：文件>>首选项>>设置>>窗口>>新建窗口>>Open Folders In New Window>>on

@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+class myinteger
+{
+	friend ostream& operator<<(ostream &cout, myinteger &p);  //ÓÑÔª
+public:
+	myinteger(int integer)
+	{
+		this->m_int = integer;
+	}
+	     //Ç°ÖÃ--
+	myinteger & operator--()
+	{
+		this->m_int--;
+		return *this;
+	}
+	     //ºóÖÃ--
+	myinteger operator--(int)
+	{
+		myinteger temp(0);
+		temp.m_int = this->m_int;
+		this->m_int--;
+		return temp;
+	}
+private:
+	int m_int;
+};
+ostream& operator<<(ostream &cout,myinteger &p)
+{
+	cout << p.m_int;
+	return cout;
+}
+int main()
+{
+	myinteger m_num = 10;
+	cout << m_num << endl;   //10
+	cout << m_num-- << endl; //10
+	cout << m_num-- << endl;  //9
+	cout << m_num << endl;   //8
+	cout << --m_num << endl;  //7
+	cout << m_num << endl;   //7
+	system("PAUSE");
+	return 0;
+}
+

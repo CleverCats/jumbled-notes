@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;  //总结，一般建议使用显示指定类型调用模版
+template<typename T>
+T Swap(T a, T b)  //模板函数
+{
+	return a + b;    
+}
+int Swap1(int a, int b)  //一般函数,将char型转化为整形,A的Ascii码为65
+{
+	return a + b;
+}
+
+void Test()
+{
+	int a = 10;
+	char b = 'A'; 
+	cout << Swap1(a, b)<<endl;//一般函数的调用可以实现隐式类型转换
+	// cout << Swap(a, b);  自动类型推导的模版函数导致无法确定T的类型,无法调用
+	cout << Swap<int>(a, b)<<endl;   //显示指定类型,因为确定了模版的类型,所以可以隐式转换
+}
+int main()
+{
+	Test();
+	system("PAUSE");
+	return 0;
+}

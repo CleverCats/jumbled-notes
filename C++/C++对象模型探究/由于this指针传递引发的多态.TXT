@@ -1,0 +1,50 @@
+C作为A的孙子类【是派生类都行】
+创建C对象cobj;
+cobj.FC(C* p)
+成员函数调用时实际上是cobj.FC(this,C* p)
+
+
+#include <iostream>
+using namespace std;
+class C;
+class A {
+public:
+    void FA(C* p)
+    {
+        cout << "this = " << this << endl << "decltype(this): " << typeid(this).name() << endl;
+        cout << "A:FA() called this = "<< p  <<endl<< "this = " << this<<endl;
+        cout << "p = " << this << endl << "decltype(this): " << typeid(p).name() << endl;
+    }
+};
+class B :public A
+{
+public:
+    void FB()
+    {
+        cout << "B:FB() called this = " << this <<endl;
+    }
+    int a = 10;
+};
+class C :public B
+{
+public:
+    void FD()
+    {
+        cout << "C:FD() called " << endl;
+    }
+    void FC(C* p)
+    {
+        cout << "C:FC() called this = " << p << endl;
+        FA(p);
+    }
+};
+
+int main()
+{
+    C c;
+    C* ptrc = &c;
+    c.FC(ptrc);
+    ptrc->FD();
+    return 0;
+}
+

@@ -1,0 +1,87 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Drinks
+{
+public:
+	virtual void boil() = 0; //煮水
+	virtual void brew() = 0;//冲泡
+	virtual void pour() = 0;//倒入杯中
+	virtual void addsth() = 0;//加调料
+	void DoWork()  //执行
+	{
+		this->boil();
+		this->brew();
+		this->pour();
+		this->addsth();
+	}
+};
+//制作咖啡
+class Coffee:public Drinks
+{
+public:
+	virtual void boil()
+	{
+		cout << "开始煮泉水" << endl;
+	}
+	virtual void brew()//冲泡
+	{
+		cout << "开始冲泡咖啡" << endl;
+	}
+	virtual void pour()//倒入杯中
+	{
+		cout << "倒入杯中" << endl;
+	}
+	virtual void addsth()//加调料
+	{
+		cout << "加糖和冰" << endl;
+	}
+};
+//制作茶水
+class Tea :public Drinks
+{
+public:
+	virtual void boil()
+	{
+		cout << "开始煮自来水" << endl;
+	}
+	virtual void brew()//冲泡
+	{
+		cout << "开始冲泡茶叶" << endl;
+	}
+	virtual void pour()//倒入杯中
+	{
+		cout << "倒入杯中" << endl;
+	}
+	virtual void addsth()//加调料
+	{
+		cout << "加花瓣" << endl;
+	}
+};
+void DoMake(Drinks*type) //以指针方式传递，父类型接收子类型指针
+{
+	type->DoWork(); //开始调用执行函数
+	delete type;  //释放内存
+}
+
+void DoMake(Drinks&type) //通过传递引用
+{
+	type.DoWork();
+}
+void DoMake()
+{
+	Drinks*type = new Tea; //通过创建指针指向
+	type->DoWork();
+	delete type;
+}
+int main()
+{
+	DoMake(new Coffee); //第一种调用
+	cout << "-----------------------------" << endl;
+	Coffee Cof;
+	DoMake(Cof);  //第二种调用
+	cout << "-----------------------------" << endl;
+	DoMake();  //第三种调用
+	system("pause");
+	return 0;
+}

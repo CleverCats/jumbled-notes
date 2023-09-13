@@ -1,0 +1,41 @@
+#include<iostream>
+#include<thread>
+using namespace std;
+class Print
+{
+public:
+	Print(int s) :m_s(s)  
+	{ 
+		cout << "构造函数被调用" << endl; 
+		cout << "s="<< m_s << endl;
+	}
+	void operator()()
+	{
+		cout << "s=" << m_s << endl;
+		cout << "s=" << m_s << endl;
+		cout << "s=" << m_s << endl;
+		cout << "s=" << m_s << endl;
+		cout << "s=" << m_s << endl;
+		cout << "s=" << m_s << endl;
+	}
+	Print(const Print&p) :m_s(p.m_s)  //拷贝
+	{
+		cout << "拷贝被调用" << endl;
+	}
+	~Print(){ cout << "析构" << endl; }
+	int m_s;
+};
+int main()
+{
+	int m_num = 10; //用类的对象时不应该用引用的方式传值,当主线程先运行完,改对象就会被释放,导致引用为空
+	Print p(m_num);
+	thread MyThr(p);
+	MyThr.join();
+	cout << "主线程调用中" << endl;
+	cout << "主线程调用中" << endl;
+	cout << "主线程调用中" << endl;
+	cout << "主线程调用中" << endl;
+	cout << "主线程运行结束" << endl;
+	system("pause");
+	return 0;
+}

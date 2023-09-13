@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <string.h>
+using namespace std;
+int main() {
+
+    cout<<"============= C =============="<<endl;
+
+    /*C语言风格字符串\字符数组 默认会添加 \0 即空字符作为字符串结尾*/
+    /*utf8中文一个字符3字节 所以不可以用char x = '你'; 这种操作*/
+    char char_array[] = "你好";
+    const char *char_pointer = "你好";
+    /*sizeof 字节大小会计算最后一个字符\0  输入 6*/
+    cout<<"[sizeof] char_array[] size: "<<sizeof(char_array)<<endl;
+    /*strlen 字节长度不会计算最后一个字符\0* 输出 5*/
+    cout<<"[strlen] char_pointer size: "<<strlen(char_pointer)<<endl;
+    /*打印C类型的字符串数据如果没有以\0结尾则会出现越界访问*/
+    cout<<"char_pointer data: "<<char_pointer<<endl;
+
+    cout<<"============= CPP =============="<<endl;
+
+    /*cpp风格的string调用.size()会返回其内原始字符数组的大,不包含\0, */
+    string cpp_string = "Hello";
+    const char *cpp_char_pointer = cpp_string.c_str();
+    /*不含\0的字节大小 输出5*/
+    cout<<"cpp_string.size(): "<<cpp_string.size()<<endl;
+    /*c_str会返回C类型的字符串, 自动添加\0, 但是strlen不计算\0  输出5*/
+    cout<<"strlen cpp_string.c_str(): "<<strlen(cpp_char_pointer)<<endl;
+
+    /**** 总结 ****
+    在分配内存时如过使用char p = new char[size], 如果是对char数组或者指向字符串的char*进行数据拷贝,
+    size记得取 sizeof(字符数组[sizeof会计算\0]) 或者strlen(char*字符串指针[strlen不计算\0, 遇到第一个\0停止计算])+1,
+    以保证将C类型字符串的\0进行正确填充, 避免对端解包后对于char *数据的接受和输出因为没有\0导致内存访问越界的情况
+    *************/
+    return 0;
+}

@@ -1,0 +1,73 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Father  //父类 或者称为 基类
+{
+public:
+	Father()
+	{
+		this->money = 40000;
+		cout << "father构造被调用" << endl; 
+	}
+	void Func()     //与子类Son1中有相同成员函数
+	{
+		cout << "Father父类Func函数调用" << endl;
+	}
+	void prin()
+	{
+		cout << this->age << endl;
+	}
+public:
+	int age;
+	int money;
+private:
+	string lover;
+};
+class Son1 :public Father 
+{
+public:
+	void Func()     //与父类中有相同成员函数
+	{
+		cout << "Son1子类Func函数调用" << endl;
+	}
+	void Fun()  
+	{
+		age = 50;
+		money = 10000;
+	}
+
+};
+class Son2 :public Father
+{
+public:
+	Son2()
+	{
+		Father::money = 26000;//如果存在与父类同名成员,直接赋值为子类本身自带成员赋值,非继承成员,如果改变继承属性，需要加父类作用域
+		this->money = 10000;  //原有自带成员属性赋值
+	}
+public:
+	int money;
+};
+int main()
+{
+	Son2 S2;   //创建子类时先会自动创建一个父类
+	system("PAUSE");
+	Son1 S1;
+	system("PAUSE");
+	S1.Func();
+	S1.Father::Func();      //同名函数如下同理,同名下如果想访问继承函数，必须加作用域,因为此时子类会隐藏掉父类中所有与其相同名的成员函数
+	S1.Fun();  //注意：***加父类的作用域不是代表访问父类本体的成员,而是访问父类继承给你后,在你那里的成员（在重名时一般才需要这么做)***
+	S1.Father::money = 4000; //当没有相同名称的成员时，这两种方法都是访问的从父类继承过来的属性
+	S1.money = 20000;  
+	cout << S1.money << endl;  //有同名成员时直接.访问的是子类本身自带的属性
+	cout << S1.Father::money << endl;
+	cout << &S1.Father::money << endl;
+	cout << &S1.money << endl;   //******可以看出，这两个地址是相同的******
+	cout << S2.money << endl;  //有同名成员时直接.访问的是子类本身自带的属性
+	cout << S2.Father::money << endl;  //如果子类与父类有相同名称类型的成员，那么直接 子类对象.相同成员 访问的是子类本身带有的成员
+	                                     //如果需要访问在父类那里继承过来的成员，需要加上 父类的作用域 
+	cout << &S2.money << endl;
+	cout << &S2.Father::money << endl;
+	system("PAUSE");
+	return 0;
+}

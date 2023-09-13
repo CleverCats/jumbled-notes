@@ -1,0 +1,53 @@
+#include<iostream>
+using namespace std;
+class person
+{
+	friend void sub(); //友元
+public:
+	person(int age)
+	{
+		this->m_age = new int(age);  //在构造函数赋给传入的实参的指针开辟新的地址
+	}
+	person& operator=(person &p)  //在赋值时,会调用该赋值函数,也可用于拷贝
+	{
+		if (this->m_age != NULL);
+	{delete this->m_age; this->m_age = NULL; } //指针置空
+		this->m_age = new int(*p.m_age);   //在赋值时就删除原内存，在堆区开辟新内存
+		return *this;  //返回原调用该函数的对象的引用
+	}
+	/*person(const person &p)   
+	{
+		       这是拷贝构造函数
+	}*/
+	~person()
+	{
+		if (this->m_age != NULL)
+		{              
+			delete m_age; //释放堆区内存,置空指针
+			m_age = NULL;
+		}
+	}
+
+private:
+	int*m_age;  //指针型变量
+};
+void sub()
+{
+	person A(10);
+	cout << *A.m_age << endl;
+	person B(20);
+	B = A;
+	cout << *B.m_age << endl;
+	person C(50);
+	A = B = C; //自定义赋值操作 调用重载赋值函数
+	cout << *A.m_age << endl;
+	cout << *B.m_age << endl;
+	cout << *C.m_age << endl;
+	//person D(A)或者person D = A 为 拷贝操作 调用拷贝构造函数
+}
+int main()
+{
+	sub();
+	system("PAUSE");
+	return 0;
+}

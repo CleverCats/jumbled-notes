@@ -1,0 +1,36 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Father  //父类1   //虚继承，则为虚基类
+{
+public:
+	Father()
+	{
+		this->money = 40000;
+	}
+public:
+int money;  //与另一个父类成员函数同名
+};
+class Son1 :virtual public Father{};
+class Son2 :virtual public Father{};
+class grandson:public Son1,public Son2
+{
+public:
+	grandson()
+	{
+		//this->money = 100; 应该只继承一份从基类延续下来的Money属性，采用虚继承
+		this->money = 1000; //用虚继承方式只继承下来一份money属性
+	}
+};
+int main()
+{
+	grandson gds; //实例化对象
+	cout << gds.money << endl; // 虚继承过来的
+	cout << gds.Son1::money << endl; //继承父类1的  //可见菱形继承出现的重类成员(原因是同源继承)
+	                                              //现象可以采用虚继承的方式解决
+	                                           //这三种输出都是gds继承过来成为自己的money属性的值
+										//如果不赋初值则为虚基类的原始值
+	cout << gds.Son2::money << endl; //继承父类2的 
+	system("pause");
+	return 0;
+}

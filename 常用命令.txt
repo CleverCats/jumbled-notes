@@ -5,3 +5,6 @@
 3.查看网站ip: nslookup www.baidu.com
 4.连接mysql: mysql -h[IP] -p[PORT] -u[USERNAME] -p[PWD]
 5.查看依赖(通过exemple快速查找三方库需要的依赖): ldd 可执行文件
+6.查看文件大小 du -sh filename
+   -s 选项表示要查看指定文件夹的总大小（汇总)
+   -h 选项表示以人类可读的方式显示文件夹大小(KB/MB/GB)

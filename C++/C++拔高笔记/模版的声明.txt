@@ -1,0 +1,28 @@
+#include<iostream>
+#include<string>
+using namespace std;
+template<typename T> //template 模版  typename或者class  类型名称声明  T类型名称  
+void Swap(T &a, T &b)      //模板的目的: 提高代码的复用性,将类型参数化
+{
+	T temp = a;
+	a = b;
+	b = temp;
+}
+//template<class H>  //如果声明了一个模板类型,那么必须指定这个类型的具体类型,否则程序无法运行
+int main()      
+{
+	char c[4] = "你";
+	int a = 10, b = 20;
+	Swap(a, b);   //1.自动类型推导  自动推导出来的数据类型必须一致才可可以使用
+	cout << c << endl;
+	cout << a << endl   
+		<< b << endl;
+	/* int a=10; double b=20.0; swap(a,b);  自动推导出来的数据类型不相同,不可调用*/
+	Swap<int>(a, b);  //2.显示指定类型
+	cout << a << endl
+		<< b << endl;
+	system("pause");
+	system("cls");
+}
+
+ //模版的声明写在每一个使用对象的上方

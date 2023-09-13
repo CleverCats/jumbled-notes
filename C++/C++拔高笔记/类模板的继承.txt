@@ -1,0 +1,36 @@
+#include<iostream>					//总结：如果父类是一个类模板,那么子类需要指出父类T的数据类型
+#include<string>
+using namespace std;
+template<class T1>
+class Father
+{
+public:
+	Father()
+	{
+		cout << "调用了Father的构造函数" << endl;
+	}
+	T1 m_name;
+};
+template<class T, class T2 >
+class Son:public::Father<T>  //基础父类必须确定T的类型,可以指定显示 例如 class Son:public::Father<string> 
+	                           //若想灵活调用 子类也需要变成类模板 例如  class Son:public::Father<T>  
+{
+public:
+	Son()
+	{
+		cout << "调用了Son的构造函数" << endl;
+		cout << "T的数据类型:" << typeid(T).name() << endl << "T2的数据类型:" << typeid(T2).name() << endl;
+	}
+	T2 age;
+};
+void test()
+{
+	Son <string, int>S1;  /* 在继承父类时会进行父类的构造,这时string传给T确定了父类中T1的类型,然后构造子类继承过来
+						  int 传给T2对子类中的T2类型进行的声明*/
+}
+int main()
+{
+	test();
+	system("PAUSE");
+	return 0;
+}

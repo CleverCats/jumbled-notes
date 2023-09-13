@@ -1,0 +1,41 @@
+#include<iostream>             
+// 主流的方法:将文件名改为.hpp将类内声明和类外实现放在一个文件中
+//也可以分成.h和.cpp但在主cpp中直接调用 模板的.cpp
+#include<string>											
+#include"Person.hpp"
+using namespace std;
+void test()
+{
+	Person<string>Per("马小跳");
+	Per.print();
+}
+int main()
+{
+	test(); //调用
+	system("PAUSE");
+	return 0;
+}
+
+////                  以下写在.hpp文件中
+//#pragma once
+//#include<iostream>
+//using namespace std;
+//template<class T>
+//class Person
+//{
+//public:
+//	Person(T name);  //模板函数类声明
+//	void print();
+//	T m_name;
+//};
+//template<class T>					 //告诉编译器模板的存在
+//Person<T>::Person(T name)   //需要加模板参数列表
+//{
+//	this->m_name = name;
+//	cout << "我被构造名字了！" << endl;
+//}
+//template<class T>						//告诉编译器模板的存在
+//void Person<T>::print()   //需要加模板参数列表
+//{
+//	cout << "我的初始名称:" << this->m_name << endl;
+//}

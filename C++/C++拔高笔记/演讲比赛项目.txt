@@ -1,0 +1,145 @@
+#include<iostream>
+#include<vector>  //选手容器
+#include<string>  
+#include<set>   //id容器
+#include<algorithm>
+#include<map>
+#include<numeric>  //算数生成算法
+#include<deque>
+#include<ctime>
+#define Total 12   //参数总人数12
+using namespace std;
+class Player  //选手
+{
+public:
+	Player(int id, string name, float score);
+	int m_id;        //编号
+	string m_name;   //姓名
+	float m_score;   //分数
+};
+Player::Player(int id, string name, float score) :m_id(id), m_name(name), m_score(score){};
+void TestPrint(const vector<Player> &v)  //打印比赛结果
+{
+	int rank = 0;  //名次
+	for (vector<Player>::const_iterator i = v.begin();i!=v.end(); i++)
+	{
+		 rank++;
+		cout <<"第"<< rank<<"名  "<<"编号:" << (*i).m_id << " 姓名:" << (*i).m_name << " 分数:" << (*i).m_score << endl;
+	}
+}
+void AssignScore(vector<Player>&v)  //评委打分
+{
+	for (int index = 0; index < v.size(); index++)
+	{
+		deque<float>S;  //分数容器
+		for (int i = 0; i < Total; i++)
+		{
+			float score = rand() % 40 + 61;  //打分
+			S.push_back(score);
+		}
+		sort(S.begin(), S.end());   //升序排序
+		S.pop_back(); S.pop_front();  //去掉最高分和最低分
+		float Sum = accumulate(S.begin(), S.end(), 0);   //总分
+		float Avg = Sum / S.size();  //平均分
+		v[index].m_score = Avg;  //选手获得分数
+		S.clear();
+	}
+}
+class MySort  //成绩排序
+{
+public:
+	bool operator()(const Player &per1,const Player & per2)
+	{
+		return per1.m_score > per2.m_score;
+	}
+};
+class IDSort   //ID排序
+{
+public:
+	bool operator()(const Player &per1, const Player & per2)
+	{
+		return per1.m_id > per2.m_id;
+	}
+};
+void CreatPlayer()
+{
+	srand((unsigned int)time(NULL));
+	vector<int>ID;
+	vector<Player>Per;  //选手容器
+	for (int id = 1001; id < 1013; id++)
+	{
+		ID.push_back(id);   //初始化ID
+	}
+	random_shuffle(ID.begin(), ID.end());  // 随机抽签.打乱编号
+	for (int i = 0; i < Total; i++)
+	{
+		string Name = "选手";
+		string NameSeed = "ABCDEFGHIJKL";
+		Name += NameSeed[i];
+		int Id = ID[i];
+		Player p(Id, Name, 0);   //初始化选手池
+		Per.push_back(p);
+	}
+	sort(Per.begin(), Per.end(), IDSort());   //按ID排序
+	vector<Player>Per1;   //第一组选手
+	vector<Player>Per2;  //第二组选手
+	for (int j = 0; j < Per.size(); j++)
+	{
+		if (j < (Per.size() / 2))
+		{
+			Per1.push_back(Per[j]);   //实例化第一组选手
+		}
+		else
+		{
+			Per2.push_back(Per[j]);   //实例化第二组选手
+		}
+	}
+	cout << "预选赛开始" << endl; system("PAUSE");
+	AssignScore(Per1);  //给第一轮选手打分
+	sort(Per1.begin(), Per1.end(), MySort());   //按成绩排序
+	cout << "第一轮预选赛结束" << endl;
+	TestPrint(Per1);
+	for (int c = 0; c < 3; c++)Per1.pop_back();  //淘汰最后三名选手
+	cout << "第二轮预选赛开始" << endl; system("PAUSE");
+	sort(Per2.begin(), Per2.end(), MySort());   //按成绩排序
+	AssignScore(Per2);  //给第二轮选手打分
+	cout << "第二轮预选赛结束" << endl; system("PAUSE");
+	TestPrint(Per2);
+	for (int L = 0; L < 3; L++)Per2.pop_back();  //淘汰最后三名选手
+	vector<Player>Per3;  //决赛组 
+	for (int n = 0; n <6 ; n++)
+	{
+		if (n <3)
+		{
+			Per3.push_back(Per1[n]);
+		}
+		else
+		{
+			Per3.push_back(Per2[n-3]);
+		}
+	}
+	//merge(Per1.begin(), Per1.end(), Per2.begin(), Per2.end(), Per3.begin());  //实例化决赛组 不能合并暂时不知道原因
+	cout << "决赛开始" << endl;
+	system("PAUSE");
+	AssignScore(Per3);  //给决赛选手打分
+	sort(Per3.begin(), Per3.end(), MySort());   //按成绩排序
+	TestPrint(Per3);
+	cout << "比赛结束" << endl;
+	cout << "冠军:" << Per3[0].m_name << endl;
+	cout << "季军:" << Per3[1].m_name << endl;
+	cout << "亚军:" << Per3[2].m_name << endl;
+}
+void Menu()
+{
+	cout << "******1.开始抽签******" << endl;
+	cout << "******2.开始比赛******" << endl;
+	cout << "******3.往届记录******" << endl;
+	cout << "******4.退出系统******" << endl;
+}
+int main()
+{
+	Menu();
+	CreatPlayer();
+	system("pause");
+	return 0;
+}

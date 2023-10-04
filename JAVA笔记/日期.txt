@@ -1,0 +1,25 @@
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
+
+public class BigIntegerClass {
+	public static void main(String[] args) {
+		//大整数
+		BigInteger bigInteger = new BigInteger("900000000000");
+		BigInteger bigInteger2 = new BigInteger("800000000000");
+		System.out.println(bigInteger2.subtract(bigInteger));
+		//日期
+		Date cur_date = new Date(); 
+		SimpleDateFormat date_formate = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss");
+		System.out.println(date_formate.format(cur_date));
+		//日历类
+		Calendar calender = Calendar.getInstance();
+		System.out.println(calender.get(Calendar.YEAR)+"年"+(calender.get(Calendar.MONTH)+1)+"月"
+				+calender.get(Calendar.DAY_OF_MONTH)+"日");
+	}
+}

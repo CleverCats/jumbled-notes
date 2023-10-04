@@ -1,0 +1,47 @@
+import javax.sound.midi.Soundbank;
+
+public class Construct {
+	public static void main(String[] args) {
+		B b = new B();
+		b.run();
+	}
+}
+
+interface A{
+/******************
+interface类默认存在abstract修饰, 作为抽象类,不可被实例化(new)需要被实现(implements)
+并进行方法重写, 类方法只声明不实现
+接口变量默认public static final不可修改, 方法默认public abstract必须被重写
+public static final int age = 10;
+public abstract void run();
+*******************/
+	int age = 10;
+	void run();
+}
+
+// 接口(interface)继承(extends)接口允许不重写方法
+interface C extends A{}
+
+/*****************
+错误语法, 类(class)不能继承(extends)接口, 只能实现(implements)接口(interface)
+接口(interface)也不能继承类(class), 只能继承(extends)接口, 此外接口实现接口也是错误的
+class D extends A{}
+interface E extends B{}
+*****************/
+
+/*****************
+类(class)实现(implements)接口必须重写接口的方法, 且支持多接口(类似多继承)
+接口继承或者类实现允许多继承, interface A extends B,C,.. class A implements B,C,... 
+类继承class A extends B 只支持单继承
+******************/
+class B implements A{
+	@Override
+	// 必须重写, 否者报错
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println("B run");
+		// age = 20; 常量不可修改
+	}
+}
+// 类不可直接继承接口,但是类可以继承实现了接口的类
+class D extends B{}

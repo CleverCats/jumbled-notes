@@ -1,0 +1,30 @@
+import java.util.DoubleSummaryStatistics;
+import javax.swing.Spring;
+
+public class enumClass {
+	public static void main(String[] args) {
+		System.out.println(Sessions.Summer);
+		System.out.println(Sessions.Spring);
+		/*Sessions{name = 夏天', time = 6'} 
+		 *Sessions{name = 春天', time = 3'}*/
+	}
+	
+}
+enum Sessions{
+	Spring("春天",3),Summer("夏天",6);
+	private String name;
+	private int time;
+	private Sessions(String name, int time) {
+		this.name = name;
+		this.time = time;
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Sessions{"+
+			"name = "+ name+ '\''+
+			", time = "+ time+ '\''+
+			"}";
+		}
+	}
+	

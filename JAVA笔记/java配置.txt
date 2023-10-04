@@ -1,0 +1,1 @@
+maven配置自动生效: file->settings->build tools->any change ->ture

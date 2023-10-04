@@ -1,0 +1,29 @@
+home/config/yolov3_mobilenetv2_8xb24-ms-416-300e_coco.py
+
+opencv-python
+opencv-python-headless
+
+[conda环境安装]
+conda create --name openmmlab python=3.9 -y
+conda activate openmmlab 
+pip install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu111/torch_stable.html
+# 暂时不需要这一步 pip install numpy==1.17.0 pandas==2.0.3 
+
+[mmlab环境安装]
+/**********
+pip install opencv-python "opencv-python-headless<4.3"
+pip install openmim
+
+
+mim install mmcv-full==1.4.1
+mim install mmdet==2.22.0
+pip install opencv-python==3.4.10.37
+pip install mmcls==0.15.0 # mmclassification才需要
+
+conda install ipykernel
+python -m ipykernel install --name mmlab
+
+jupyter kernelspec list # 显示所有内核
+jupyter kernelspec remove kernel_name # 删除内核
+
+***********/

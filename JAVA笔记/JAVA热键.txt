@@ -1,0 +1,19 @@
+自动补全代码：ctrl和2同时按完以后释放，再快速按L
+ctrl+shift+/ ：/* */注释
+Alt+/  ：参数类型
+
+Intellij快捷键:
+返回值补全		Ctrl + alt + v
+抛出异常			Alt + enter
+自动代码生成		Alt + Insert
+	generate and 
+选中代码块生成try_catch 	Ctrl + alt + t
+格式化代码		Ctrl + alt + L
+参数提示			Ctrl + P
+选中一列			Alt + 左键
+创建快捷代码(for 变量等等)       Ctrl + J
+	for_each->iter
+                for_length->itar 
+                normal_for->fori
+maven 快速导入本地jar包 pom.xml下: Alt + insert
+批量修改变量名: 		Shift + F6

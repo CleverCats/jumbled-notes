@@ -1,0 +1,162 @@
+import java.util.*;
+
+public class JavaContainerClass {
+
+    public static void main(String[] args) {
+    	
+        /**************** ArrayList - 动态数组 ******************/
+        List<String> arrayList = new ArrayList<>();
+        arrayList.add("Orange");  // O(1)
+        arrayList.add("Apple");   // O(1)
+        arrayList.add("Banana");  // O(1)
+
+        System.out.println("ArrayList: " + arrayList);
+
+        // 插入元素
+        arrayList.add(1, "Mango");  // O(n)
+        System.out.println("ArrayList after insertion: " + arrayList);
+
+        // 删除元素
+        arrayList.remove("Banana");  // O(n)
+        System.out.println("ArrayList after deletion: " + arrayList);
+
+        // 查找元素
+        boolean containsOrange = arrayList.contains("Orange");  // O(n)
+        System.out.println("ArrayList contains 'Orange': " + containsOrange);
+
+        // 排序（根据元素自然顺序）
+        Collections.sort(arrayList);  // O(n log n)
+        System.out.println("ArrayList after sorting: " + arrayList);
+        
+        // 遍历 ArrayList
+        System.out.print("ArrayList traversal: ");
+        for (String element : arrayList) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+        
+        /**************** LinkedList - 双向链表 ******************/
+        List<String> linkedList = new LinkedList<>();
+        linkedList.add("Apple");   // O(1)
+        linkedList.add("Banana");  // O(1)
+        linkedList.add("Orange");  // O(1)
+
+        System.out.println("\nLinkedList: " + linkedList);
+
+        // 插入元素
+        linkedList.add(1, "Mango");  // O(n)
+        System.out.println("LinkedList after insertion: " + linkedList);
+
+        // 删除元素
+        linkedList.remove("Banana");  // O(n)
+        System.out.println("LinkedList after deletion: " + linkedList);
+
+        // 查找元素
+        boolean containsOrangeLinkedList = linkedList.contains("Orange");  // O(n)
+        System.out.println("LinkedList contains 'Orange': " + containsOrangeLinkedList);
+        
+        // 遍历 LinkedList
+        System.out.print("LinkedList traversal: ");
+        for (String element : linkedList) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+        
+        /**************** TreeSet - 有序的集合 ******************/
+        Set<String> treeSet = new TreeSet<>();
+        treeSet.add("Apple");   // O(log n)
+        treeSet.add("Banana");  // O(log n)
+        treeSet.add("Orange");  // O(log n)
+
+        System.out.println("\nTreeSet: " + treeSet);
+
+        // 排序（根据元素自然顺序）
+        System.out.println("TreeSet after sorting: " + treeSet);
+        
+        // 遍历 TreeSet
+        System.out.print("TreeSet traversal: ");
+        for (String element : treeSet) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+        
+        /**************** HashSet - 无重复元素的集合，元素无特定顺序 ******************/
+        Set<String> hashSet = new HashSet<>();
+        hashSet.add("Apple");   // O(1)
+        hashSet.add("Banana");  // O(1)
+        hashSet.add("Orange");  // O(1)
+        hashSet.add("Banana");  // O(1) - 插入重复值无效
+
+        System.out.println("\nHashSet: " + hashSet);
+        
+        // 查找元素
+        boolean hashSetcontainsOrange = hashSet.contains("Orange");
+        System.out.println("HashSet contains 'Orange': " + hashSetcontainsOrange);
+
+        // 删除元素
+        boolean removed = hashSet.remove("Apple");
+        System.out.println("HashSet after deletion Apple " + removed + ": " + hashSet);
+        
+        // 遍历 HashSet
+        System.out.print("HashSet traversal: ");
+        for (String element : hashSet) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+        
+        /**************** HashMap - 键值对映射表 ******************/
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("Apple", 1);   // O(1)
+        hashMap.put("Banana", 2);  // O(1)
+        hashMap.put("Orange", 3);  // O(1)
+
+        System.out.println("\nHashMap: " + hashMap);
+
+        // 查找键的值
+        int valueOfBanana = hashMap.get("Banana");  // O(1)
+        System.out.println("Value for key 'Banana' in HashMap: " + valueOfBanana);
+
+        // 删除键值对
+        hashMap.remove("Apple");  // O(1)
+        System.out.println("HashMap after deletion: " + hashMap);
+        
+		/* 遍历 HashMap, entrySet()返回类型：Set<Map.Entry<K, V>> 返回一个包含键值对的 Set 视图，每个元素都是一个
+		 * Map.Entry 对象，包含键和对应的值*/
+        System.out.print("HashMap traversal by entrySet(): ");
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            System.out.print(entry.getKey() + "=" + entry.getValue() + " ");
+        }
+        
+        System.out.print("\nHashMap traversal by keySet(): ");
+        for (String key : hashMap.keySet()) {
+            System.out.print(key + "=" + hashMap.get(key) + " ");
+        }
+        
+        // 只访问值
+        System.out.print("\nHashMap traversal value by values(): ");
+        for (int value : hashMap.values()) {
+            System.out.print("value: "+value+" ");
+        }
+        
+        System.out.println();
+        
+        /**************** LinkedHashMap - 有序的键值对映射表 ******************/
+        Map<String, Integer> linkedHashMap = new LinkedHashMap<>();
+        linkedHashMap.put("Apple", 1);   // O(1)
+        linkedHashMap.put("Banana", 2);  // O(1)
+        linkedHashMap.put("Orange", 3);  // O(1)
+
+        System.out.println("\nLinkedHashMap: " + linkedHashMap);
+
+        // 排序（根据键的自然顺序）
+        Map<String, Integer> sortedLinkedHashMap = new TreeMap<>(linkedHashMap);
+        System.out.println("LinkedHashMap after sorting by keys: " + sortedLinkedHashMap);
+        
+        // 遍历 LinkedHashMap - 同ArrayList
+        System.out.print("LinkedHashMap traversal: ");
+        for (Map.Entry<String, Integer> entry : linkedHashMap.entrySet()) {
+            System.out.print(entry.getKey() + "=" + entry.getValue() + " ");
+        }
+        System.out.println();
+    }
+}

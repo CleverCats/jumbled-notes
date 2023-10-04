@@ -13,3 +13,5 @@ dockerfile构建镜像:
 docker build -t muduoenv .
 通过镜像构建容器id, it:
 docker run -it  -p 6060:6060 --name=muduo-container muduoenv /bin/bash
+进入容器：
+docker exec -it muduo-container /bin/bash

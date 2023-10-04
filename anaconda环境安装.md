@@ -61,6 +61,11 @@ jupyter notebook
 # pytorch环境中运行, 将当前环境pytorch 添加内核并别名Python [conda env:pytorch]
 python -m ipykernel install --user --name pytorch --display-name "Python [conda env:pytorch]"
 ----------------------------
+# 安装内核
+conda install ipykernel
+python -m ipykernel install --name mmlab
+# 显示所有内核
+jupyter kernelspec list
 # 删除某个jupyter内核
 jupyter kernelspec remove kernelname
 # 删除虚拟环境
@@ -73,3 +78,12 @@ pip install G:\opencv_python-4.1.0.25-cp36-cp36m-win_amd64.whl
 pip install D:\Microsofe下载\torch-2.0.1+cu118-cp310-cp310-win_amd64.whl
 # 恢复默认源
 conda config --remove-key channels
+
+# 环境导出
+conda activate your_environment
+conda env export > environment.yaml
+conda env create -f environment.yaml
+
+# 环境克隆
+conda create --name timer_clone --clone timer
+

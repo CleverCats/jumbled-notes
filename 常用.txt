@@ -32,3 +32,13 @@ nginx.exe -s reload # 重新加载nginx配置文件
 
 curl ifconfig.me 查看公网ip
 vocode项目多开：文件>>首选项>>设置>>窗口>>新建窗口>>Open Folders In New Window>>on
+
+mysql创建：
+docker run -id \
+-p 3306:3306 \
+--name=mysql-container \
+-v $PWD/conf:/etc/mysql/conf.d \
+-v $PWD/logs:/logs \
+-v $PWD/data:/var/lib/mysql \
+-e MYSQL_ROOT_PASSWORD=a123456 \
+mysql:8.0.33
